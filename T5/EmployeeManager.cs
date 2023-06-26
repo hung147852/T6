@@ -107,6 +107,7 @@ namespace T5
 
 		public override void Find()
 		{
+			PrintList(employees);
 			Console.Write("Enter EmpNo or Name: ");
 			String searchKey = Console.ReadLine();
 
@@ -116,7 +117,7 @@ namespace T5
 
 			foreach (Employee emp in employees)
 			{
-				if (emp != null) break;
+				if (emp != null);
 				{
 					if (emp.GetNo().Equals(searchKey) || emp.GetName().Equals(searchKey))
 					{
