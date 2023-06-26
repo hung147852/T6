@@ -9,7 +9,7 @@ namespace T5
 		public static int MAX = 10;
 		private int currLenght = 0;
 		private Employee[] employees;
-		//private User[] users1;
+		
 
 		public EmployeeManager()
 		{
@@ -20,20 +20,12 @@ namespace T5
 					new Employee("103", "minhnv", "minhnv@gmail.com", "123456", false),
 				};
 		}
-			//users1 = new User[10];
-
-		//	users1 = new User[]
-		//		{
-		//		new User("admin", "admin123", true), // Người dùng có quyền đầy đủ
-		//		new User("user1", "password1", false) // Người dùng chỉ có quyền tìm kiếm
-		//		};
-		
-
+			
 		public EmployeeManager(String name, Employee[] employees)
 		{
 			this.employees = employees;
 			this.currLenght = employees.Length;
-			//this.users1 = users;
+			
 		}
 
 		public override void AddNew()
@@ -164,9 +156,7 @@ namespace T5
 			bool isLoggedIn = false;
 			string loggedInUser = null;
 
-
-            // Vòng lặp đăng nhập
-            while (!isLoggedIn)
+			while (!isLoggedIn)
 			{
 				Console.WriteLine("***EMPLOYEE MANAGER***");
 				Console.Write("Username (Gmail): ");
@@ -174,7 +164,7 @@ namespace T5
 				Console.Write("Password: ");
 				string password = Console.ReadLine();
 				int result;
-				// Kiểm tra thông tin đăng nhập
+				
 				foreach (Employee emp in employees)
 				{
 					if (emp.GetEmail().Equals(username) && emp.Getpassword().Equals(password))
@@ -182,16 +172,17 @@ namespace T5
 						if (emp.GetisManager().Equals(true))
 						{
 							isLoggedIn = true;
-							//loggedInUser = emp;
+							
 
 							Console.WriteLine("Login successful! Welcome Admin\n");
-							result = 1;
+							
 							return;
 						}
-						if (emp.GetisManager().Equals(false))
-                            Console.WriteLine("Login successful! Welcome User\n");
+						else
+						{
+							Console.WriteLine("Login successful! Welcome User\n");
 							return;
-                        }
+						}
 					}
 				}
 				if (!isLoggedIn)
@@ -200,6 +191,7 @@ namespace T5
 				}
 			}
 		}
+	}
 
 		
 	
