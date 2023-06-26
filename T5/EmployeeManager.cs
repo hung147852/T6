@@ -9,23 +9,24 @@ namespace T5
 		public static int MAX = 10;
 		private int currLenght = 0;
 		private Employee[] employees;
-		
 
-		public EmployeeManager()
+
+		public EmployeeManager() : base()
 		{
 			//this.employees = new employee[max];
-			this.employees = new Employee[] {
+			employees = new Employee[]{
 					new Employee("101", "hoangnm", "hoangnm@gmail.com", "123456", true),
 					new Employee("102", "namph", "namph@gmail.com", "123456", false),
 					new Employee("103", "minhnv", "minhnv@gmail.com", "123456", false),
-				};
+                    new Employee("104", "trungnv", "trungnv@gmail.com", "123456", false),
+            };
 		}
-	
+
 		public EmployeeManager(String name, Employee[] employees)
 		{
 			this.employees = employees;
-			this.currLenght = employees.Length;
-			
+			currLenght = employees.Length;
+
 		}
 
 		public override void AddNew()
@@ -39,7 +40,7 @@ namespace T5
 			}
 			else
 			{
-				this.employees[currLenght++] = e;
+				employees[currLenght++] = e;
 			}
 			Console.WriteLine("Them moi thanh cong.");
 			Console.WriteLine("Bang du lieu sau khi them.");
@@ -53,8 +54,8 @@ namespace T5
 			String searchKey = Console.ReadLine();
 			for (int i = 0; i < employees.Length; i++)
 			{
-				if (this.employees[i] == null) break;
-				Employee emp = this.employees[i];
+				if (employees[i] == null) break;
+				Employee emp = employees[i];
 				if (emp.GetNo().Equals(searchKey) || emp.GetName().Equals(searchKey))
 				{
 					Console.Write("Enter Name want change: ");
@@ -73,14 +74,14 @@ namespace T5
 
 		public override void Delete()
 		{
-			int SearchIndex = this.FindIndex();
+			int SearchIndex = FindIndex();
 			if (SearchIndex >= 0)
 			{
 				for (int i = SearchIndex; i <= currLenght - 1; i++)
 				{
-					this.employees[i] = this.employees[i + 1];
+					employees[i] = employees[i + 1];
 				}
-				this.employees[currLenght - 1] = null;
+				employees[currLenght - 1] = null;
 				Console.WriteLine("Da xoa thanh cong.");
 				Console.WriteLine(employees);
 			}
@@ -95,7 +96,7 @@ namespace T5
 			String searchKey = Console.ReadLine();
 			for (int i = 0; i < employees.Length; i++)
 			{
-				Employee emp = this.employees[i];
+				Employee emp = employees[i];
 				if (emp.GetNo().Equals(searchKey) || emp.GetName().Equals(searchKey))
 				{
 					return i;
@@ -120,7 +121,6 @@ namespace T5
 					if (emp.GetNo().Equals(searchKey) || emp.GetName().Equals(searchKey))
 					{
 						result[count++] = emp;
-						//count++;
 					}
 				}
 
@@ -133,6 +133,7 @@ namespace T5
 			else
 			{
 				Console.WriteLine("Not Found!");
+				return;
 			}
 
 		}
@@ -154,47 +155,137 @@ namespace T5
 
 		{
 			bool isLoggedIn = false;
-			string loggedInUser = null;
+			Employee loggedInUser = null;
 
 
-          
-            while (!isLoggedIn)
+
+			while (!isLoggedIn)
 			{
 				Console.WriteLine("***EMPLOYEE MANAGER***");
 				Console.Write("Username (Gmail): ");
 				string username = Console.ReadLine();
 				Console.Write("Password: ");
 				string password = Console.ReadLine();
-				int result;
-				
+				//int result;
+
 				foreach (Employee emp in employees)
 				{
-					if (emp.GetEmail().Equals(username) && emp.Getpassword().Equals(password))
+					if ((emp.GetEmail() == username) && (emp.Getpassword() == password))
 					{
-						if (emp.GetisManager().Equals(true))
-						{
+						//if (emp.IsManager())
+						//{
 							isLoggedIn = true;
-							
+							loggedInUser = emp;
 
-							Console.WriteLine("Login successful! Welcome Admin\n");
-							result = 1;
-							return;
-						}
-						if (emp.GetisManager().Equals(false))
-                            Console.WriteLine("Login successful! Welcome User\n");
-							return;
-                        }
+							//Console.WriteLine("Login successful! Welcome Admin\n");
+							//result = 1;
+							break;
+						//}
 					}
 				}
+
 				if (!isLoggedIn)
 				{
 					Console.WriteLine("Invalid username or password. Please try again.\n");
 				}
+				if (isLoggedIn)
+				{
+					Console.WriteLine("Login successful! Welcome " + (loggedInUser.IsManager() ? "Admin" : "User") + "\n");
+
+					if (loggedInUser.IsManager())
+					{
+						ManageEmployees();
+					}
+					else
+					{
+						FindEmployee();
+					}
+				}
 			}
 		}
+        public void ManageEmployees()
+        {
+            int selected = 0;
 
-		
-	
+            do
+            {
+                Console.WriteLine("***EMPLOYEE MANAGER***");
+                Console.WriteLine("1. Search Employee by Name or EmpNo");
+                Console.WriteLine("2. Add New Employee");
+                Console.WriteLine("3. Update Employee");
+                Console.WriteLine("4. Delete Employee");
+                Console.WriteLine("5. Exit");
+                Console.Write("   Select (1-5): ");
+                selected = Convert.ToInt16(Console.ReadLine());
+
+                switch (selected)
+                {
+                    case 1:
+                        Find();
+                        break;
+                    case 2:
+                        AddNew();
+                        break;
+                    case 3:
+                        Update();
+                        break;
+                    case 4:
+                        Delete();
+                        break;
+                    case 5:
+                        Console.WriteLine("-------- END ---------");
+                        break;
+                    default:
+                        Console.WriteLine("Invalid");
+                        break;
+                }
+            } while (selected != 5);
+        }
+
+		public void FindEmployee()
+		{
+			int selected = 0;
+			do
+			{
+				Console.WriteLine("***EMPLOYEE MANAGER***");
+				Console.WriteLine("1. Search Employee by Name or EmpNo");
+				Console.WriteLine("5. Exit");
+				Console.Write("   Select (1, 5): ");
+				selected = Convert.ToInt16(Console.ReadLine());
+				switch (selected)
+				{
+					case 1:
+						Find();
+						break;
+					case 5:
+						Console.WriteLine("-------- END ---------");
+						break;
+					default:
+						Console.WriteLine("Invalid");
+						break;
+				}
+			} while (selected != 5) ;
+		}
+	}
+
+
+
+    //            if (selected == 1)
+    //        {
+    //            Find();
+    //        }
+    //        else if (selected == 5)
+    //        {
+    //            Console.WriteLine("-------- END ---------");
+    //        }
+    //        else
+    //        {
+    //            Console.WriteLine("Invalid");
+				//return;
+      //      }
+    
 }
+
+
 
 

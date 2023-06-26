@@ -8,10 +8,12 @@ namespace T5
 		private String email;
         private String password;
         private bool isManager;
+        private Employee loggedInUser;
 
         public Employee()
         {
         }
+
 
         public String GetNo()
         {
@@ -31,7 +33,7 @@ namespace T5
             return this.password;
         }
 
-        public bool GetisManager()
+        public bool IsManager()
         {
             return this.isManager;
         }
@@ -55,7 +57,12 @@ namespace T5
             this.isManager = isManager;
         }
 
-        
+        public Employee LoggedInUser
+        {
+            get { return loggedInUser; }
+            set { loggedInUser = value; }
+        }
+
         public void Input()
         {
             Console.Write("Enter No: ");
