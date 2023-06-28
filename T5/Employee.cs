@@ -73,6 +73,7 @@ namespace T5
             this.email = Console.ReadLine();
         }
 
+
         public override string? ToString()
         {
             return no + ", " + name + ", " + email;

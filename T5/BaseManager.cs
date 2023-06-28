@@ -15,6 +15,8 @@ namespace T5
         public abstract void Delete();
         public abstract void Find();
         public abstract void UserLogin();
+        public abstract void ExportList();
+        public abstract void Importdata();
     }
 }
 
